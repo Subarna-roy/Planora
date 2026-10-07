@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - PlaNora</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <style>
+
+        .profile-container {
+            padding: 50px 0;
+        }
+
+        .profile-card {
+            background: #161620;
+            border: 1px solid #292936;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-card h1 {
+            margin-bottom: 15px;
+        }
+
+        .login-status {
+            display: inline-block;
+            background: #242337;
+            color: #ddd;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .login-status span {
+            color: #c084fc;
+            font-weight: bold;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .info-box {
+            background: #20202d;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .info-box span {
+            display: block;
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .info-box strong {
+            color: white;
+            font-size: 15px;
+        }
+
+        .role {
+            color: #c084fc !important;
+        }
+
+        .edit-btn {
+            margin-top: 25px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .edit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .edit-form {
+            display: none;
+            margin-top: 25px;
+            background: #20202d;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .edit-form label {
+            display: block;
+            margin-bottom: 7px;
+            color: #ddd;
+        }
+
+        .edit-form .input {
+            width: 100%;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .save-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-edit-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #444;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .success-message {
+            background: #16351f;
+            border: 1px solid #2e8b57;
+            color: #8ff0a4;
+        }
+
+        .error-message {
+            background: #2a1515;
+            border: 1px solid #6b2020;
+            color: #ff9999;
+        }
+
+        @media(max-width:700px) {
+
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <a class="logo" href="index.html">
+        Pla<span>Nora</span>
+    </a>
+
+    <nav class="nav-links">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="events.html">
+            Events
+        </a>
+
+        <a href="my-bookings.html">
+            My Bookings
+        </a>
+
+        <a href="profile.html">
+            My Profile
+        </a>
+
+        <a href="LogoutServlet">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- ================= PROFILE ================= -->
+
+<section class="profile-container container">
+
+    <div class="profile-card">
+
+        <h1>
+            My Profile
+        </h1>
+
+
+        <div class="login-status">
+
+            Logged in as:
+
+            <span id="role">
+                USER
+            </span>
+
+        </div>
+
+
+        <!-- ================= PROFILE INFORMATION ================= -->
+
+        <div class="profile-info">
+
+
+            <div class="info-box">
+
+                <span>
+                    User ID
+                </span>
+
+                <strong id="userId">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    Name
+                </span>
+
+                <strong id="name">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    Email
+                </span>
+
+                <strong id="email">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    Phone
+                </span>
+
+                <strong id="phone">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    Account Type
+                </span>
+
+                <strong
+                    id="accountType"
+                    class="role">
+
+                    Loading...
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= EDIT BUTTON ================= -->
+
+        <button
+            class="edit-btn"
+            onclick="showEditForm()">
+
+            Edit Profile
+
+        </button>
+
+
+        <!-- ================= EDIT FORM ================= -->
+
+        <div
+            class="edit-form"
+            id="editForm">
+
+
+            <h3>
+                Edit Profile
+            </h3>
+
+            <br>
+
+
+            <label>
+                Name
+            </label>
+
+            <input
+                type="text"
+                id="editName"
+                class="input"
+                required>
+
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="editEmail"
+                class="input"
+                required>
+
+
+            <label>
+                Phone
+            </label>
+
+            <input
+                type="text"
+                id="editPhone"
+                class="input"
+                required>
+
+
+            <button
+                class="save-btn"
+                onclick="updateProfile()">
+
+                Save Changes
+
+            </button>
+
+
+            <button
+                class="cancel-edit-btn"
+                onclick="hideEditForm()">
+
+                Cancel
+
+            </button>
+
+
+            <div
+                id="message"
+                class="message">
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+/* =====================================================
+   LOAD PROFILE
+   ===================================================== */
+
+function loadProfile() {
+
+    fetch("ProfileServlet", {
+        method: "GET",
+        credentials: "same-origin"
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load profile."
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        console.log(
+            "ProfileServlet response:",
+            data
+        );
+
+
+        /* ================= LOGIN CHECK ================= */
+
+        if (!data.loggedIn) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+
+        /* ================= DISPLAY PROFILE ================= */
+
+        document.getElementById("userId")
+            .textContent =
+            data.userId;
+
+
+        document.getElementById("name")
+            .textContent =
+            data.name;
+
+
+        document.getElementById("email")
+            .textContent =
+            data.email;
+
+
+        document.getElementById("phone")
+            .textContent =
+            data.phone;
+
+
+        document.getElementById("role")
+            .textContent =
+            data.role;
+
+
+        document.getElementById("accountType")
+            .textContent =
+            data.role;
+
+
+        /* ================= EDIT FORM ================= */
+
+        document.getElementById("editName")
+            .value =
+            data.name;
+
+
+        document.getElementById("editEmail")
+            .value =
+            data.email;
+
+
+        document.getElementById("editPhone")
+            .value =
+            data.phone;
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Profile error:",
+            error
+        );
+
+        document.getElementById("name")
+            .textContent =
+            "Unable to load";
+
+    });
+
+}
+
+
+/* =====================================================
+   SHOW EDIT FORM
+   ===================================================== */
+
+function showEditForm() {
+
+    document.getElementById("editForm")
+        .style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   HIDE EDIT FORM
+   ===================================================== */
+
+function hideEditForm() {
+
+    document.getElementById("editForm")
+        .style.display =
+        "none";
+
+    document.getElementById("message")
+        .style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   UPDATE PROFILE
+   ===================================================== */
+
+function updateProfile() {
+
+    const name =
+        document.getElementById("editName")
+            .value.trim();
+
+    const email =
+        document.getElementById("editEmail")
+            .value.trim();
+
+    const phone =
+        document.getElementById("editPhone")
+            .value.trim();
+
+
+    if (!name || !email || !phone) {
+
+        showMessage(
+            "Please fill all fields.",
+            false
+        );
+
+        return;
+    }
+
+
+    const formData =
+        new URLSearchParams();
+
+    formData.append(
+        "name",
+        name
+    );
+
+    formData.append(
+        "email",
+        email
+    );
+
+    formData.append(
+        "phone",
+        phone
+    );
+
+
+    fetch("UpdateProfileServlet", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type":
+                "application/x-www-form-urlencoded"
+        },
+
+        body:
+            formData.toString(),
+
+        credentials:
+            "same-origin"
+
+    })
+
+    .then(response => {
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        if (data.success) {
+
+            showMessage(
+                "Profile updated successfully.",
+                true
+            );
+
+            document.getElementById("name")
+                .textContent =
+                name;
+
+            document.getElementById("email")
+                .textContent =
+                email;
+
+            document.getElementById("phone")
+                .textContent =
+                phone;
+
+
+            setTimeout(
+                hideEditForm,
+                1200
+            );
+
+        } else {
+
+            showMessage(
+                data.message ||
+                "Unable to update profile.",
+                false
+            );
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Update profile error:",
+            error
+        );
+
+        showMessage(
+            "Unable to update profile.",
+            false
+        );
+
+    });
+
+}
+
+
+/* =====================================================
+   SHOW MESSAGE
+   ===================================================== */
+
+function showMessage(
+    message,
+    success
+) {
+
+    const messageBox =
+        document.getElementById("message");
+
+
+    messageBox.textContent =
+        message;
+
+
+    messageBox.className =
+        "message " +
+        (success
+            ? "success-message"
+            : "error-message");
+
+
+    messageBox.style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   LOAD PROFILE WHEN PAGE OPENS
+   ===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadProfile
+);
+
+</script>
+
+
+</body>
+
+</html>

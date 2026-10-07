@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login - PlaNora</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <a class="logo"
+       href="index.html">
+
+        Pla<span>Nora</span>
+
+    </a>
+
+    <a href="index.html">
+        ← Home
+    </a>
+
+</header>
+
+
+
+<div class="form-box">
+
+    <h2>
+        Welcome Back
+    </h2>
+
+
+    <p class="muted">
+        Login using your User ID, phone number or email.
+    </p>
+
+
+    <!-- ================= LOGOUT MESSAGE ================= -->
+
+    <div id="logoutMessage"
+         style="
+            display:none;
+            background:#16351f;
+            border:1px solid #2e8b57;
+            color:#8ff0a4;
+            padding:12px 16px;
+            border-radius:10px;
+            margin:18px 0;
+            text-align:center;
+            font-weight:bold;
+         ">
+
+    </div>
+
+
+    <!-- ================= LOGIN FORM ================= -->
+
+    <form action="login"
+          method="post">
+
+
+        <label>
+            Login ID / Phone / Email
+        </label>
+
+
+        <input
+            class="input"
+            name="login"
+            required
+        >
+
+
+        <label>
+            Password
+        </label>
+
+
+        <input
+            class="input"
+            type="password"
+            name="password"
+            required
+        >
+
+
+        <button
+            class="btn"
+            type="submit">
+
+            Login
+
+        </button>
+
+
+    </form>
+
+
+    <p
+        class="muted"
+        style="margin-top:18px">
+
+        New user?
+
+        <a
+            style="color:#c084fc"
+            href="signup.html">
+
+            Create account
+
+        </a>
+
+    </p>
+
+
+</div>
+
+
+
+<!-- ================= LOGOUT MESSAGE SCRIPT ================= -->
+
+<script>
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    if (params.get("logout") === "success") {
+
+        const message =
+            document.getElementById(
+                "logoutMessage"
+            );
+
+
+        message.textContent =
+            "Successfully logged out!";
+
+
+        message.style.display =
+            "block";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Admin Dashboard - PlaNora</title><link rel="stylesheet" href="css/style.css"></head>
+<body><header class="navbar"><a class="logo" href="index.html">Pla<span>Nora</span></a><nav class="nav-links"><a href="admin-dashboard.html">Dashboard</a><a href="add-event.html">Add Event</a><a href="events.html">Events</a><a href="logout">Logout</a></nav></header>
+<section class="dashboard container"><h1>Admin Dashboard</h1><p class="muted">Manage PlaNora concerts, users and bookings.</p>
+<div class="stats"><div class="stat"><span class="muted">Total Events</span><strong>3</strong></div><div class="stat"><span class="muted">Users</span><strong>1+</strong></div><div class="stat"><span class="muted">Bookings</span><strong>0</strong></div></div>
+<a class="btn" href="add-event.html">+ Add New Concert</a>
+<h2 class="section-title" style="margin-top:50px">Manage Events</h2>
+<div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Event</th><th>Artist</th><th>Price</th><th>Tickets</th><th>Action</th></tr></thead>
+<tbody><tr><td>1</td><td>Summer Beats</td><td>Arijit Singh</td><td>₹1499</td><td>500</td><td class="actions"><a class="btn secondary" href="#">Edit</a><a class="btn danger" href="admin/delete-event?id=1">Delete</a></td></tr>
+<tr><td>2</td><td>Melody Night</td><td>Shreya Ghoshal</td><td>₹1999</td><td>300</td><td class="actions"><a class="btn secondary" href="#">Edit</a><a class="btn danger" href="admin/delete-event?id=2">Delete</a></td></tr></tbody></table></div>
+</section></body></html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Book Ticket - PlaNora</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a class="logo" href="index.html">
+        Pla<span>Nora</span>
+    </a>
+
+    <a href="events.html">
+        ← All Events
+    </a>
+
+</header>
+
+
+<section class="section container">
+
+    <div class="card">
+
+        <img
+            class="card-img"
+            style="height:300px"
+            src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a"
+            alt="Summer Beats">
+
+
+        <div class="card-body">
+
+            <h1>
+                Summer Beats
+            </h1>
+
+
+            <p class="muted">
+                🎤 Arijit Singh
+            </p>
+
+
+            <p>
+                📅 20 October 2026 · ⏰ 7:00 PM
+            </p>
+
+
+            <p>
+                📍 Chandigarh Arena
+            </p>
+
+
+            <p class="price">
+                ₹1499 per ticket
+            </p>
+
+
+            <p class="muted">
+                500 tickets available
+            </p>
+
+
+            <div class="ticket-box">
+
+                <h3>
+                    Select Tickets
+                </h3>
+
+
+                <!-- IMPORTANT:
+                     Use the actual servlet URL -->
+                <form
+                    action="BookTicketServlet"
+                    method="post"
+                    id="bookingForm">
+
+
+                    <!-- EVENT ID -->
+
+                    <input
+                        type="hidden"
+                        name="eventId"
+                        value="1">
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="qty">
+
+                        <button
+                            type="button"
+                            onclick="changeQuantity(-1)">
+
+                            −
+
+                        </button>
+
+
+                        <input
+                            id="qty"
+                            class="input"
+                            style="max-width:90px;text-align:center"
+                            name="quantity"
+                            value="1"
+                            min="1"
+                            max="10"
+                            readonly>
+
+
+                        <button
+                            type="button"
+                            onclick="changeQuantity(1)">
+
+                            +
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+
+                    <h3>
+
+                        Total: ₹
+
+                        <span id="total">
+                            1499
+                        </span>
+
+                    </h3>
+
+
+                    <br>
+
+
+                    <button
+                        class="btn"
+                        type="submit">
+
+                        Book Now
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =====================================================
+   TICKET PRICE
+   ===================================================== */
+
+const ticketPrice = 1499;
+
+
+/* =====================================================
+   CHANGE QUANTITY
+   ===================================================== */
+
+function changeQuantity(amount) {
+
+    const quantityInput =
+        document.getElementById("qty");
+
+    let quantity =
+        parseInt(quantityInput.value);
+
+
+    quantity = quantity + amount;
+
+
+    if (quantity < 1) {
+        quantity = 1;
+    }
+
+
+    if (quantity > 10) {
+        quantity = 10;
+    }
+
+
+    quantityInput.value = quantity;
+
+
+    document.getElementById("total").innerText =
+        quantity * ticketPrice;
+}
+
+
+/* =====================================================
+   BOOKING FORM
+   ===================================================== */
+
+document.getElementById("bookingForm")
+    .addEventListener("submit", function(event) {
+
+        const quantity =
+            parseInt(
+                document.getElementById("qty").value
+            );
+
+
+        if (quantity < 1 || quantity > 10) {
+
+            event.preventDefault();
+
+            alert(
+                "Please select between 1 and 10 tickets."
+            );
+
+            return;
+        }
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

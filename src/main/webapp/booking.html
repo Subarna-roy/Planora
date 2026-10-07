@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Book Tickets - PlaNora</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <style>
+
+        .booking-container {
+            max-width: 850px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .booking-card {
+            background: #171722;
+            border: 1px solid #2b2b3a;
+            border-radius: 20px;
+            padding: 35px;
+        }
+
+        .booking-card h1 {
+            margin-bottom: 25px;
+        }
+
+        .event-info {
+            background: #20202d;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .event-info h2 {
+            margin-bottom: 15px;
+        }
+
+        .event-info p {
+            margin: 10px 0;
+            color: #ddd;
+        }
+
+        .booking-form {
+            background: #20202d;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .booking-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .booking-form input {
+            width: 100%;
+            padding: 13px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #11111a;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .total-box {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #c084fc;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .book-btn:hover {
+            opacity: 0.9;
+        }
+
+        .error-box {
+            background: #2a1515;
+            border: 1px solid #6b2020;
+            color: #ff9999;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .loading {
+            color: #aaa;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .navbar .nav-links a {
+            color: #ddd;
+            white-space: nowrap;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #c084fc;
+        }
+
+        @media(max-width:700px) {
+
+            .navbar .nav-links {
+                gap: 12px;
+                font-size: 13px;
+            }
+
+            .booking-card {
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <a class="logo" href="index.html">
+        Pla<span>Nora</span>
+    </a>
+
+    <nav class="nav-links">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="events.html">
+            Events
+        </a>
+
+        <a href="my-bookings.html">
+            My Bookings
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <a href="LogoutServlet">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- ================= BOOKING ================= -->
+
+<div class="booking-container">
+
+    <div class="booking-card">
+
+        <h1>
+            Book Your Tickets
+        </h1>
+
+
+        <!-- EVENT INFORMATION -->
+
+        <div class="event-info">
+
+            <h2 id="eventName">
+                Loading...
+            </h2>
+
+            <p>
+                <strong>Artist:</strong>
+                <span id="artist">
+                    Loading...
+                </span>
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                <span id="eventDate">
+                    Loading...
+                </span>
+            </p>
+
+            <p>
+                <strong>Time:</strong>
+                <span id="eventTime">
+                    Loading...
+                </span>
+            </p>
+
+            <p>
+                <strong>Venue:</strong>
+                <span id="venue">
+                    Loading...
+                </span>
+            </p>
+
+            <p>
+                <strong>Ticket Price:</strong>
+                ₹<span id="ticketPrice">
+                    Loading...
+                </span>
+            </p>
+
+            <p>
+                <strong>Available Tickets:</strong>
+                <span id="availableTickets">
+                    Loading...
+                </span>
+            </p>
+
+        </div>
+
+
+        <!-- BOOKING FORM -->
+
+        <div class="booking-form">
+
+            <form
+                action="BookTicketServlet"
+                method="post"
+                id="bookingForm">
+
+
+                <!-- ONLY EVENT ID IS SENT -->
+
+                <input
+                    type="hidden"
+                    name="eventId"
+                    id="eventId"
+                >
+
+
+                <label for="quantity">
+                    Number of Tickets
+                </label>
+
+                <input
+                    type="number"
+                    name="quantity"
+                    id="quantity"
+                    min="1"
+                    value="1"
+                    required
+                >
+
+
+                <div class="total-box">
+
+                    Total:
+                    ₹<span id="total">0</span>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="book-btn"
+                    id="bookButton">
+
+                    Confirm Booking
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    /*
+     * Get eventId from the URL.
+     *
+     * Example:
+     * booking.html?eventId=1
+     */
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const eventId =
+        params.get("eventId");
+
+
+    /*
+     * If eventId is missing,
+     * return to events page.
+     */
+
+    if (!eventId) {
+
+        alert("Event not found.");
+
+        window.location.href = "events.html";
+
+    }
+
+
+    /*
+     * Get event information from the server.
+     *
+     * We will create EventServlet next.
+     */
+
+    fetch("EventServlet?eventId=" + eventId)
+
+        .then(response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load event."
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+        .then(event => {
+
+
+            /*
+             * Check whether event exists.
+             */
+
+            if (!event.success) {
+
+                throw new Error(
+                    event.message || "Event not found."
+                );
+
+            }
+
+
+            /*
+             * Display event information.
+             */
+
+            document.getElementById("eventId").value =
+                event.eventId;
+
+            document.getElementById("eventName").textContent =
+                event.eventName;
+
+            document.getElementById("artist").textContent =
+                event.artist;
+
+            document.getElementById("eventDate").textContent =
+                event.eventDate;
+
+            document.getElementById("eventTime").textContent =
+                event.eventTime;
+
+            document.getElementById("venue").textContent =
+                event.venue;
+
+            document.getElementById("ticketPrice").textContent =
+                event.ticketPrice;
+
+            document.getElementById("availableTickets").textContent =
+                event.availableTickets;
+
+
+            /*
+             * Set maximum ticket quantity.
+             */
+
+            const quantity =
+                document.getElementById("quantity");
+
+            quantity.max =
+                event.availableTickets;
+
+
+            /*
+             * Calculate total.
+             */
+
+            function calculateTotal() {
+
+                let qty =
+                    parseInt(quantity.value) || 0;
+
+                if (qty < 1) {
+                    qty = 1;
+                }
+
+                if (qty > event.availableTickets) {
+
+                    qty =
+                        event.availableTickets;
+
+                    quantity.value =
+                        event.availableTickets;
+                }
+
+                const total =
+                    qty * event.ticketPrice;
+
+                document.getElementById("total")
+                    .textContent =
+                    total.toFixed(2);
+            }
+
+
+            quantity.addEventListener(
+                "input",
+                calculateTotal
+            );
+
+
+            calculateTotal();
+
+        })
+
+        .catch(error => {
+
+            console.error(error);
+
+            document.querySelector(".booking-card")
+                .innerHTML = `
+
+                    <div class="error-box">
+
+                        <h2>
+                            Unable to Load Event
+                        </h2>
+
+                        <p>
+                            ${error.message}
+                        </p>
+
+                        <br>
+
+                        <a
+                            href="events.html"
+                            class="btn">
+
+                            Back to Events
+
+                        </a>
+
+                    </div>
+
+                `;
+
+        });
+
+</script>
+
+
+</body>
+
+</html>
